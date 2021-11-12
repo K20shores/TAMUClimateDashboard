@@ -243,14 +243,13 @@ footer ul li a:hover {
   font-weight: 300;
   line-height: 1.5em;
   position: fixed;
-  top: 180px;
+  bottom: 45%;
   right: 0;
   width: 64px;
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1031;
   border-radius: 8px 0 0 8px;
   text-align: center;
-  top: 120px;
 }
 
 .fixed-plugin .SocialMediaShareButton,
