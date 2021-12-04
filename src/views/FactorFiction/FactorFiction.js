@@ -5,11 +5,29 @@ import { makeStyles } from "@material-ui/core/styles";
 import GridItem from "components/Grid/GridItem.js";
 import GridContainer from "components/Grid/GridContainer.js";
 import Button from "components/CustomButtons/Button.js";
+// import SnackbarContent from "components/Snackbar/SnackbarContent.js";
+import Snackbar from "components/Snackbar/Snackbar.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 
 import avatar from "assets/img/faces/marc.jpg";
+
+const statements = [
+  {
+    title: "fact",
+    statements: "Dogs are cats",
+    validity: false,
+    image: "something",
+  },
+
+  {
+    title: "fact 2",
+    statements: "Dogs are cats",
+    validity: false,
+    image: "something",
+  },
+];
 
 const styles = {
   cardCategoryWhite: {
@@ -45,6 +63,19 @@ const useStyles = makeStyles(styles);
 
 export default function FactorFiction() {
   const classes = useStyles();
+  const [ShowFact, setShowFact] = React.useState(false);
+  const [WhichFact, setFact] = React.useState(0);
+
+  React.useEffect(() => {
+    // Specify how to clean up after this effect:
+    return function cleanup() {
+      // to stop the warning of calling setState of unmounted component
+      var id = window.setTimeout(null, 0);
+      while (id--) {
+        window.clearTimeout(id);
+      }
+    };
+  });
   return (
     <GridContainer>
       <GridItem xs={12} sm={12} md={12}>
@@ -59,7 +90,7 @@ export default function FactorFiction() {
           <CardBody>
             <div className={classes.typo}>
               <div className={classes.note}></div>
-              <h2>Statement</h2>
+              <h2>{statements[WhichFact].title}</h2>
             </div>
             <a href="#pablo" onClick={(e) => e.preventDefault()}>
               <img src={avatar} alt="..." />
@@ -72,8 +103,21 @@ export default function FactorFiction() {
                 or not.
               </p>
             </div>
-            <Button color="success">Fact</Button>
+            <Button color="success" onClick={() => setShowFact(true)}>
+              Fact
+            </Button>
+            <Snackbar
+              place="tr"
+              color="info"
+              message="Welcome to MATERIAL DASHBOARD React - a beautiful freebie for every web developer."
+              open={ShowFact}
+              closeNotification={() => setShowFact(false)}
+              close
+            />
             <Button color="danger">Fiction</Button>
+            <Button color="info" onClick={() => setFact(WhichFact + 1)}>
+              Next fact
+            </Button>
           </CardBody>
         </Card>
       </GridItem>
