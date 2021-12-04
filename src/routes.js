@@ -57,7 +57,7 @@ const dashboardRoutes = [
     path: "/FactorFiction",
     name: "Fact or Fiction",
     rtlName: "قائمة الجدول",
-    icon: "content_paste",
+    icon: "fact_check",
     component: FactorFiction,
     layout: "/admin",
   },
