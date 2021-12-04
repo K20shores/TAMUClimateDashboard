@@ -24,43 +24,37 @@ import Photo7 from 'assets/img/frames/frame7.jpg';
 import Photo8 from 'assets/img/frames/frame8.jpg';
 import Photo9 from 'assets/img/frames/frame9.jpg';
 
-
+const photos = [
+    Photo0,
+    Photo1,
+    Photo2,
+    Photo3,
+    Photo4,
+    Photo5,
+    Photo6,
+    Photo7,
+    Photo8,
+    Photo9,
+];
 
 const useStyles = makeStyles(styles);
 
 export default function Icons() {
   const classes = useStyles();
   const [which, changePicture] = React.useState(0);
-  //changePicture(5);
   return (
     <>
-    {temperature_slider}
-    <img src={Photo0} />
+    <Slider
+      aria-label="Temperature"
+      valueLabelDisplay="auto"
+      step={1}
+      marks
+      min={0}
+      max={photos.length - 1}
+      onChange={(_,a) => changePicture(a)}
+    />
+    <img src={photos[which]} />
     </>
   );
 }
 
-const temperature_slider = (
-<Slider
-  aria-label="Temperature"
-  valueLabelDisplay="auto"
-  step={0.5}
-  marks
-  min={0}
-  max={5}
-  onChange={(_,a)=>console.log(a)}
-/>
-  )
-
-const photos = [
-    photo:Photo0,
-    photo:Photo1,
-    photo:Photo2,
-    photo:Photo3,
-    photo:Photo4,
-    photo:Photo5,
-    photo:Photo6,
-    photo:Photo7,
-    photo:Photo8,
-    photo:Photo9,
-];
