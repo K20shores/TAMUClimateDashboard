@@ -27,7 +27,7 @@ import Language from "@material-ui/icons/Language";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import UserProfile from "views/UserProfile/UserProfile.js";
-import TableList from "views/TableList/TableList.js";
+import FactorFiction from "views/FactorFiction/FactorFiction.js";
 import Typography from "views/Typography/Typography.js";
 import Icons from "views/Icons/Icons.js";
 import Maps from "views/Maps/Maps.js";
@@ -54,11 +54,11 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/table",
-    name: "Table List",
+    path: "/FactorFiction",
+    name: "Fact or Fiction",
     rtlName: "قائمة الجدول",
     icon: "content_paste",
-    component: TableList,
+    component: FactorFiction,
     layout: "/admin",
   },
   {
