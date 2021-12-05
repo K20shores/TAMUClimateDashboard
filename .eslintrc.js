@@ -19,8 +19,16 @@ module.exports = {
     "plugin:prettier/recommended",
   ],
   rules: {
-    "prettier/prettier": ["error",{
-      "endOfLine": "auto"}
-    ]
-  }
+    "prettier/prettier": [
+      "error",
+      {
+        endOfLine: "auto",
+      },
+    ],
+  },
+  settings: {
+    react: {
+      version: "detect",
+    },
+  },
 };

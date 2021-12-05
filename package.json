@@ -1,7 +1,7 @@
 {
-  "name": "material-dashboard-react",
+  "name": "tamu-climate-dashboard",
   "version": "1.10.0",
-  "description": "Material Dashboard React. Coded by Creative Tim",
+  "description": "Texas A&M DEEP Climate Science Dashboard",
   "private": false,
   "main": "dist/index.js",
   "dependencies": {
@@ -20,7 +20,7 @@
     "react-swipeable-views": "0.14.0"
   },
   "scripts": {
-    "start": "react-scripts --openssl-legacy-provider start",
+    "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
@@ -32,15 +32,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/creativetimofficial/material-dashboard-react.git"
+    "url": "git+https://github.com/K20shores/TAMUClimateDashboard.git"
   },
   "keywords": [],
-  "author": "Creative Tim <hello@creative-tim.com> (https://www.creative-tim.com/)",
+  "author": "Texas A&M DEEP Climate Science Team <k20shores@tamu.edu>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/creativetimofficial/material-dashboard-react/issues"
+    "url": "https://github.com/K20shores/TAMUClimateDashboard/issues"
   },
-  "homepage": "https://creativetimofficial.github.io/material-dashboard-react/#/dashboard",
+  "homepage": "",
   "optionalDependencies": {
     "@babel/core": "7.14.0",
     "typescript": "4.2.4"
