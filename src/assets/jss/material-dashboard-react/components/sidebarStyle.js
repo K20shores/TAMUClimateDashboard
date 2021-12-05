@@ -23,16 +23,15 @@ const sidebarStyle = (theme) => ({
     bottom: "0",
     left: "0",
     zIndex: "1",
-    ...boxShadow,
     width: drawerWidth,
     [theme.breakpoints.up("md")]: {
+      ...boxShadow,
       width: drawerWidth,
       position: "fixed",
       height: "100%",
     },
     [theme.breakpoints.down("sm")]: {
       width: drawerWidth,
-      ...boxShadow,
       position: "fixed",
       display: "block",
       top: "0",

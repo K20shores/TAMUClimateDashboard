@@ -77,7 +77,7 @@ export default function Sidebar(props) {
   var brand = (
     <div className={classes.logo}>
       <a
-        href="https://www.creative-tim.com?ref=mdr-sidebar"
+        href="#"
         className={classNames(classes.logoLink)}
         target="_blank"
       >
@@ -90,7 +90,6 @@ export default function Sidebar(props) {
   );
   return (
     <div>
-      <Hidden mdUp implementation="css">
         <Drawer
           variant="temporary"
           anchor="right"
@@ -102,6 +101,7 @@ export default function Sidebar(props) {
           ModalProps={{
             keepMounted: true, // Better open performance on mobile.
           }}
+          sx={{ display: { xs: 'none', md: 'block' } }}
         >
           {brand}
           <div className={classes.sidebarWrapper}>
@@ -115,8 +115,6 @@ export default function Sidebar(props) {
             />
           ) : null}
         </Drawer>
-      </Hidden>
-      <Hidden smDown implementation="css">
         <Drawer
           anchor="left"
           variant="permanent"
@@ -124,6 +122,7 @@ export default function Sidebar(props) {
           classes={{
             paper: classNames(classes.drawerPaper),
           }}
+          sx={{ display: { s: 'block', md: 'none' } }}
         >
           {brand}
           <div className={classes.sidebarWrapper}>{links}</div>
@@ -134,7 +133,6 @@ export default function Sidebar(props) {
             />
           ) : null}
         </Drawer>
-      </Hidden>
     </div>
   );
 }
