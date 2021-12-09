@@ -26,7 +26,7 @@ import Notifications from "@material-ui/icons/Notifications";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
 import GreenhouseGases from "views/GreenhouseGases/GreenhouseGases.js";
-import TableList from "views/TableList/TableList.js";
+import FactorFiction from "views/FactorFiction/FactorFiction.js";
 import Typography from "views/Typography/Typography.js";
 import Icons from "views/Icons/Icons.js";
 import Maps from "views/Maps/Maps.js";
@@ -49,10 +49,10 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/table",
-    name: "Table List",
-    icon: "content_paste",
-    component: TableList,
+    path: "/FactorFiction",
+    name: "Fact or Fiction",
+    icon: "fact_check",
+    component: FactorFiction,
     layout: "/admin",
   },
   {
