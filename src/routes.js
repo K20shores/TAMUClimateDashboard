@@ -42,14 +42,8 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-<<<<<<< HEAD
-    path: "/user",
-    name: "User Profile",
-=======
     path: "/GreenhouseGases",
     name: "Greenhouse Gases",
-    rtlName: "ملف تعريفي للمستخدم",
->>>>>>> origin/greenhouse
     icon: Person,
     component: GreenhouseGases,
     layout: "/admin",
