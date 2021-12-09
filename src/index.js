@@ -1,8 +1,12 @@
 /*!
 
 =========================================================
-* Material Dashboard React - v1.10.0
+* TAMU Climate Science Dashboard
 =========================================================
+
+---------------------------------------------------------
+* Project theme and skeleton provided by: 
+---------------------------------------------------------
 
 * Product Page: https://www.creative-tim.com/product/material-dashboard-react
 * Copyright 2021 Creative Tim (https://www.creative-tim.com)
@@ -11,10 +15,9 @@
 * Coded by Creative Tim
 
 =========================================================
-
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
 */
+
 import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
