@@ -1,5 +1,7 @@
 /*eslint-disable*/
 import React from "react";
+
+import Slider from '@mui/material/Slider';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import Hidden from "@material-ui/core/Hidden";
@@ -11,55 +13,48 @@ import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 
 import styles from "assets/jss/material-dashboard-react/views/iconsStyle.js";
+import Photo0 from 'assets/img/frames/frame0.jpg';
+import Photo1 from 'assets/img/frames/frame1.jpg';
+import Photo2 from 'assets/img/frames/frame2.jpg';
+import Photo3 from 'assets/img/frames/frame3.jpg';
+import Photo4 from 'assets/img/frames/frame4.jpg';
+import Photo5 from 'assets/img/frames/frame5.jpg';
+import Photo6 from 'assets/img/frames/frame6.jpg';
+import Photo7 from 'assets/img/frames/frame7.jpg';
+import Photo8 from 'assets/img/frames/frame8.jpg';
+import Photo9 from 'assets/img/frames/frame9.jpg';
+
+const photos = [
+    Photo0,
+    Photo1,
+    Photo2,
+    Photo3,
+    Photo4,
+    Photo5,
+    Photo6,
+    Photo7,
+    Photo8,
+    Photo9,
+];
 
 const useStyles = makeStyles(styles);
 
 export default function Icons() {
   const classes = useStyles();
+  const [which, changePicture] = React.useState(0);
   return (
-    <GridContainer>
-      <GridItem xs={12} sm={12} md={12}>
-        <Card plain>
-          <CardHeader plain color="primary">
-            <h4 className={classes.cardTitleWhite}>Material Design Icons</h4>
-            <p className={classes.cardCategoryWhite}>
-              Handcrafted by our friends from{" "}
-              <a
-                href="https://design.google.com/icons/?ref=creativetime"
-                target="_blank"
-              >
-                Google
-              </a>
-            </p>
-          </CardHeader>
-          <CardBody>
-            <Hidden only={["sm", "xs"]}>
-              <iframe
-                className={classes.iframe}
-                src="https://material.io/icons/"
-                title="Icons iframe"
-              >
-                <p>Your browser does not support iframes.</p>
-              </iframe>
-            </Hidden>
-            <Hidden only={["lg", "md"]}>
-              <GridItem xs={12} sm={12} md={6}>
-                <h5>
-                  The icons are visible on Desktop mode inside an iframe. Since
-                  the iframe is not working on Mobile and Tablets please visit
-                  the icons on their original page on Google. Check the
-                  <a
-                    href="https://design.google.com/icons/?ref=creativetime"
-                    target="_blank"
-                  >
-                    Material Icons
-                  </a>
-                </h5>
-              </GridItem>
-            </Hidden>
-          </CardBody>
-        </Card>
-      </GridItem>
-    </GridContainer>
+    <>
+    <Slider
+      aria-label="Temperature"
+      valueLabelDisplay="auto"
+      step={1}
+      marks
+      min={0}
+      max={photos.length - 1}
+      onChange={(_,a) => changePicture(a)}
+    />
+    <img src={photos[which]} />
+    </>
   );
 }
+
