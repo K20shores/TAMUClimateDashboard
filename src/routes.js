@@ -28,7 +28,7 @@ import DashboardPage from "views/Dashboard/Dashboard.js";
 import GreenhouseGases from "views/GreenhouseGases/GreenhouseGases.js";
 import FactorFiction from "views/FactorFiction/FactorFiction.js";
 import Typography from "views/Typography/Typography.js";
-import Icons from "views/Icons/Icons.js";
+import SeaLevel from "views/SeaLevel/SeaLevel.js";
 import Maps from "views/Maps/Maps.js";
 import NotificationsPage from "views/Notifications/Notifications.js";
 import AboutUs from "views/AboutUs/AboutUs.js";
@@ -63,10 +63,10 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/icons",
-    name: "Icons",
+    path: "/SeaLevel",
+    name: "Sea Level Rise",
     icon: BubbleChart,
-    component: Icons,
+    component: SeaLevel,
     layout: "/admin",
   },
   {
