@@ -1,22 +1,13 @@
 /*eslint-disable*/
 import React from "react";
-import $ from 'jquery';
 import { usePapaParse } from 'react-papaparse';
 
 import Slider from '@mui/material/Slider';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-import Hidden from "@material-ui/core/Hidden";
-// core components
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
 
 // Import components for data visualizations using d3
 import { useState, useRef, useEffect } from 'react';
-import * as d3 from 'd3';
 
 import styles from "assets/jss/material-dashboard-react/views/sealevelStyle.js";
 import Photo0 from 'assets/img/frames/frame0.jpg';
@@ -46,28 +37,17 @@ const photos = [
   Photo9,
 ];
 
-const useStyles = makeStyles(styles);
-
 export default function SeaLevel() {
   const { readRemoteFile } = usePapaParse();
 
+
   // Import data
-  const [topex_arr, setTopex] = useState([]);
-  const [jason1_arr, setJason1] = useState([]);
-  const [jason2_arr, setJason2] = useState([]);
-  const [jason3_arr, setJason3] = useState([]);
-
-  /*
-  readRemoteFile(dataFile, {
-    complete: (results) => {
-      console.log('---------------------------');
-      console.log('Results:', results);
-      console.log('---------------------------');
-
-      setTopex(results.data.map(x => x[0]))
-      
-    },
-  }); */
+  const [data, setData] = useState({
+    topex_arr: [],
+    jason1_arr: [],
+    jason2_arr: [],
+    jason3_arr: []
+  })
 
   useEffect(() => {
     readRemoteFile(dataFile, {
@@ -76,30 +56,25 @@ export default function SeaLevel() {
         console.log('Results:', results);
         console.log('---------------------------');
   
-        let years = results.data.map(x => x[0]).slice(1);
-        setTopex([years, results.data.map(x => x[1]).slice(1)]);
-        setJason1([years, results.data.map(x => x[2]).slice(1)]);
-        setJason2([years, results.data.map(x => x[3]).slice(1)]);
-        setJason3([years, results.data.map(x => x[4]).slice(1)]);
+        let years = results.data.map(x => x[0]).slice(1).map(Number);
+        setData({
+          topex_arr: [years, results.data.map(x => Number(x[1])).slice(1)],
+          jason1_arr: [years, results.data.map(x => Number(x[2])).slice(1)],
+          jason2_arr: [years, results.data.map(x => Number(x[3])).slice(1)],
+          jason3_arr: [years, results.data.map(x => Number(x[4])).slice(1)]
+        })
       },
     });
   }, [])
 
-
-  console.log(topex_arr, jason1_arr, jason2_arr, jason3_arr);
-
   // Declare important things for image array of rising sea levels
-  const classes = useStyles();
   const [which, changePicture] = React.useState(0);
 
   return (
     // setup the graph and its tooltip svg
     <div className="SeaLevel">
       <SeaLevelGraph
-        topex_arr = {topex_arr}
-        jason1_arr = {jason1_arr}
-        jason2_arr = {jason2_arr}
-        jason3_arr = {jason3_arr}
+        data = {data}
       />
       <Slider
         aria-label="Temperature"

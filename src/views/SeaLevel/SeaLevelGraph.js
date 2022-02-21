@@ -1,28 +1,18 @@
 /*eslint-disable*/
 import React from "react";
-import { usePapaParse } from 'react-papaparse';
-
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import Hidden from "@material-ui/core/Hidden";
-// core components
-import GridItem from "components/Grid/GridItem.js";
-import GridContainer from "components/Grid/GridContainer.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
 
 // Import components for data visualizations using d3
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect} from 'react';
 import * as d3 from 'd3';
-
-import styles from "assets/jss/material-dashboard-react/views/sealevelStyle.js";
 import dataFile from 'assets/csv/sealevels.csv';
 
-
-const useStyles = makeStyles(styles);
-
 export default function SeaLevelGraph(props) {
+  let canvas = useRef(null);
+  let tooltipSvg = useRef(null);
+  let mmToInches = 0.0393701;
+  const w = 800;
+  const h = 400;
+
   // Declare important things for audio "pop" sound
   const audioTune = new Audio('http://codeskulptor-demos.commondatastorage.googleapis.com/pang/pop.mp3');
   const [playInLoop, setPlayInLoop] = useState(false);
@@ -35,68 +25,82 @@ export default function SeaLevelGraph(props) {
     audioTune.loop = playInLoop;
   }, [playInLoop])
 
-  // Practice data
-  const [data0] = useState(props.topex_arr);
-  const [data1] = useState(props.jason1_arr);
-  const [data2] = useState(props.jason2_arr);
-  const [data3] = useState(props.jason3_arr);
-
   // set up the graph to display data
   useEffect(() => {
+    drawGraph()
+  }, [
+    canvas.current, 
+  ]);
+
+  function drawGraph() {
     // setting up container
-    const w = 800;
-    const h = 400;
-    const svg = d3.select('#svg_id')
+    const svg = d3.select(canvas.current)
       .attr('width', w)
       .attr('height', h)
       .style('overflow', 'visible')
       .style('margin-top', '100px')
       .style('margin-left', '100px')
+      .style('margin-bottom', '5em')
 
     // setting up scaling
     const xScale = d3.scaleLinear()
       .domain([1992, 2021])
       .range([0, w]);
-    const yScale = d3.scaleLinear()
-      .domain([80 * 0.0393701, -25 * 0.0393701])
-      .range([0, h]);
 
-    // setting up axes & putting the x-axis at the bottom
+    const yScale = d3.scaleLinear()
+      .domain([80, -25])
+      .range([h, 0]);
+
+    addAxes(svg, xScale, yScale);
+
+    svg.append('g')
+      .selectAll("dots")
+      .data(props.data.topex_arr)
+      .join("circle")
+        .attr('cx', d => {
+          console.log(d[0], xScale(d[0]))
+          return xScale(d[0])
+        }
+        )
+        .attr('cy', d => {
+          console.log(d[1], yScale(d[1]))
+          return yScale(d[1])
+        }
+        )
+        .attr('r', 2)
+        .style("fill", "#69b3a2")
+        .style("opacity", 0.7)
+        .style("stroke", "black")
+  }
+
+  function addAxes(svg, xScale, yScale) {
     const xAxis = d3.axisBottom(xScale).ticks(8);
-    const yAxis = d3.axisLeft(yScale).ticks(12);
     svg.append('g')
       .attr("transform", `translate(0, ${h})`)
       .call(xAxis);
+    const yAxis = d3.axisLeft(yScale).ticks(12);
     svg.append('g')
       .call(yAxis);
 
-    // setting up axis & title labeling
     svg.append('text')
       .style('text-anchor', 'middle')
       .attr('x', w / 2)
       .attr('y', h + 50)
       .text('Year');
+
     svg.append('text')
       .style('text-anchor', 'middle')
       .attr('x', w / 2)
       .attr('y', -15)
       .text('Global mean sea level change since the year 2000');
+
     svg.append('text')
       .style('text-anchor', 'middle')
       .attr('y', h / 2)
       .attr('x', -50)
       .text('Change in global mean sea level')
       .attr('transform', 'rotate(270 ' + -50 + ' ' + h / 2 + ')');
-
-    //setting up the tooltip
-    const tooltip = d3.select('#dat_id')
-      .style("opacity", 1)
-      .attr("class", "tooltip")
-      .style("background-color", "white")
-      .style("border", "solid")
-      .style("border-width", "1px")
-      .style("border-radius", "5px")
-      .style("padding", "10px");
+  }
 
     // setup the event when first mousing over a datum
     const mouseover = function (event, d) {
@@ -143,72 +147,9 @@ export default function SeaLevelGraph(props) {
         .style("opacity", 0);
     }
 
-    // setup the actual data points onto the graph
-    svg.append('g')
-      .selectAll("dot")
-      .data(data0)
-      .enter()
-      .append("circle")
-      .attr('cx', d => xScale(d[0]))
-      .attr('cy', d => yScale(d[1]))
-      .attr('r', 2)
-      .style("fill", "#69b3a2")
-      .style("opacity", 0.7)
-      .style("stroke", "black")
-      .on("mouseover", mouseover)
-      .on("mousemove", mousemove)
-      .on("mouseleave", mouseleave);
-    // setup the actual data points onto the graph
-    svg.append('g')
-      .selectAll("dot")
-      .data(data1)
-      .enter()
-      .append("circle")
-      .attr('cx', d => xScale(d[0]))
-      .attr('cy', d => yScale(d[1]))
-      .attr('r', 2)
-      .style("fill", "#69b3a2")
-      .style("opacity", 0.7)
-      .style("stroke", "green")
-      .on("mouseover", mouseover)
-      .on("mousemove", mousemove)
-      .on("mouseleave", mouseleave);
-    // setup the actual data points onto the graph
-    svg.append('g')
-      .selectAll("dot")
-      .data(data2)
-      .enter()
-      .append("circle")
-      .attr('cx', d => xScale(d[0]))
-      .attr('cy', d => yScale(d[1]))
-      .attr('r', 2)
-      .style("fill", "#69b3a2")
-      .style("opacity", 0.7)
-      .style("stroke", "red")
-      .on("mouseover", mouseover)
-      .on("mousemove", mousemove)
-      .on("mouseleave", mouseleave);
-    // setup the actual data points onto the graph
-    svg.append('g')
-      .selectAll("dot")
-      .data(data3)
-      .enter()
-      .append("circle")
-      .attr('cx', d => xScale(d[0]))
-      .attr('cy', d => yScale(d[1]))
-      .attr('r', 2)
-      .style("fill", "#69b3a2")
-      .style("opacity", 0.7)
-      .style("stroke", "orange")
-      .on("mouseover", mouseover)
-      .on("mousemove", mousemove)
-      .on("mouseleave", mouseleave);
-  }, [data0]);
-
   return (
     // setup the graph and its tooltip svg
-    <svg id='svg_id'><g>
-      <svg id='dat_id'></svg></g>
+    <svg id='svg_id' ref={canvas}>
     </svg>
   );
 }
