@@ -56,12 +56,29 @@ export default function SeaLevel() {
         console.log('Results:', results);
         console.log('---------------------------');
   
-        let years = results.data.map(x => x[0]).slice(1).map(Number);
+        // remove the header
+        results.data = results.data.slice(1)
+
+        let years = results.data.map(x => x[0]).map(Number);
+        let topex_data = results.data.map(x => x[1]).map(Number);
+        let jason1_data = results.data.map(x => x[2]).map(Number);
+        let jason2_data = results.data.map(x => x[3]).map(Number);
+        let jason3_arr = results.data.map(x => x[4]).map(Number);
+
+        let toArrayOfObject = (y, d) => {
+          return d.map((x, idx) => {
+            return {
+              year: y[idx],
+              data: x
+            }
+          })
+        }
+
         setData({
-          topex_arr: [years, results.data.map(x => Number(x[1])).slice(1)],
-          jason1_arr: [years, results.data.map(x => Number(x[2])).slice(1)],
-          jason2_arr: [years, results.data.map(x => Number(x[3])).slice(1)],
-          jason3_arr: [years, results.data.map(x => Number(x[4])).slice(1)]
+          topex_arr: toArrayOfObject(years, topex_data),
+          jason1_arr: toArrayOfObject(years, jason1_data),
+          jason2_arr: toArrayOfObject(years, jason2_data),
+          jason3_arr: toArrayOfObject(years, jason3_arr),
         })
       },
     });

@@ -12,6 +12,13 @@ export default function SeaLevelGraph(props) {
   let mmToInches = 0.0393701;
   const w = 800;
   const h = 400;
+  const xScale = d3.scaleLinear()
+    .domain([1992, 2021])
+    .range([0, w]);
+
+  const yScale = d3.scaleLinear()
+    .domain([-25 * mmToInches, 80 * mmToInches])
+    .range([h, 0]);
 
   // Declare important things for audio "pop" sound
   const audioTune = new Audio('http://codeskulptor-demos.commondatastorage.googleapis.com/pang/pop.mp3');
@@ -30,6 +37,7 @@ export default function SeaLevelGraph(props) {
     drawGraph()
   }, [
     canvas.current, 
+    props.data.topex_arr
   ]);
 
   function drawGraph() {
@@ -42,35 +50,16 @@ export default function SeaLevelGraph(props) {
       .style('margin-left', '100px')
       .style('margin-bottom', '5em')
 
-    // setting up scaling
-    const xScale = d3.scaleLinear()
-      .domain([1992, 2021])
-      .range([0, w]);
-
-    const yScale = d3.scaleLinear()
-      .domain([80, -25])
-      .range([h, 0]);
 
     addAxes(svg, xScale, yScale);
 
-    svg.append('g')
-      .selectAll("dots")
-      .data(props.data.topex_arr)
-      .join("circle")
-        .attr('cx', d => {
-          console.log(d[0], xScale(d[0]))
-          return xScale(d[0])
-        }
-        )
-        .attr('cy', d => {
-          console.log(d[1], yScale(d[1]))
-          return yScale(d[1])
-        }
-        )
-        .attr('r', 2)
-        .style("fill", "#69b3a2")
-        .style("opacity", 0.7)
-        .style("stroke", "black")
+    console.log(props.data)
+    if (props.data.topex_arr.length > 0) {
+      plotData(svg, props.data.topex_arr, 'topex', 'black')
+      plotData(svg, props.data.jason1_arr, 'topex', 'green')
+      plotData(svg, props.data.jason2_arr, 'topex', 'red')
+      plotData(svg, props.data.jason3_arr, 'topex', 'orange')
+    }
   }
 
   function addAxes(svg, xScale, yScale) {
@@ -102,50 +91,63 @@ export default function SeaLevelGraph(props) {
       .attr('transform', 'rotate(270 ' + -50 + ' ' + h / 2 + ')');
   }
 
-    // setup the event when first mousing over a datum
-    const mouseover = function (event, d) {
-      audioTune.play();
-      d3.select(event.currentTarget).style("fill", "red");
-      tooltip
-        .style("opacity", 0)
-        .transition()
-        .duration(500)
-        .style("opacity", 1);
-      d3.select(event.currentTarget)
-        .transition()
-        .duration(350)
-        .attr('r', 4);
-    }
-    // setup the event when moving the mouse
-    const mousemove = function (event, d) {
-      tooltip.selectAll('*').remove();
-      tooltip
-        .append('rect')
-        .attr('width', 325 + parseInt(d[1].toString().length, 10) * 9)
-        .attr('height', 20)
-        .attr('stroke', 'black')
-        .attr('fill', '#E5FEFF')
-      tooltip
-        .attr('x', event.pageX / 2)
-        .attr('y', event.pageY / 2 + 100)
-        .append('text')
-        .attr('y', 15)
-        .text(`The sea level in ${parseInt(d[0])} relative to 2000 levels is: ${d[1]}.`); /*
-          .attr('x', 3*w/4)
-          .attr('y', h+50);*/
-    }
-    // setup the event when first leaving a datum
-    const mouseleave = function (event, d) {
-      d3.select(event.currentTarget).style("fill", "green");
-      d3.select(event.currentTarget)
-        .transition()
-        .duration(350)
-        .attr('r', 2);
-      tooltip
-        .transition()
-        .duration(350)
-        .style("opacity", 0);
-    }
+  function plotData(svg, data, group, color) {
+    svg.append('g')
+      .selectAll(group)
+      .data(data)
+      .join("circle")
+        .attr('cx', d => { return xScale(d.year) })
+        .attr('cy', d => { return yScale(d.data * mmToInches) })
+        .attr('r', 2)
+        .style("fill", "#69b3a2")
+        .style("opacity", 0.7)
+        .style("stroke", color)
+  }
+
+  // setup the event when first mousing over a datum
+  const mouseover = function (event, d) {
+    audioTune.play();
+    d3.select(event.currentTarget).style("fill", "red");
+    tooltip
+      .style("opacity", 0)
+      .transition()
+      .duration(500)
+      .style("opacity", 1);
+    d3.select(event.currentTarget)
+      .transition()
+      .duration(350)
+      .attr('r', 4);
+  }
+  // setup the event when moving the mouse
+  const mousemove = function (event, d) {
+    tooltip.selectAll('*').remove();
+    tooltip
+      .append('rect')
+      .attr('width', 325 + parseInt(d[1].toString().length, 10) * 9)
+      .attr('height', 20)
+      .attr('stroke', 'black')
+      .attr('fill', '#E5FEFF')
+    tooltip
+      .attr('x', event.pageX / 2)
+      .attr('y', event.pageY / 2 + 100)
+      .append('text')
+      .attr('y', 15)
+      .text(`The sea level in ${parseInt(d[0])} relative to 2000 levels is: ${d[1]}.`); /*
+        .attr('x', 3*w/4)
+        .attr('y', h+50);*/
+  }
+  // setup the event when first leaving a datum
+  const mouseleave = function (event, d) {
+    d3.select(event.currentTarget).style("fill", "green");
+    d3.select(event.currentTarget)
+      .transition()
+      .duration(350)
+      .attr('r', 2);
+    tooltip
+      .transition()
+      .duration(350)
+      .style("opacity", 0);
+  }
 
   return (
     // setup the graph and its tooltip svg
