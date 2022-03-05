@@ -102,7 +102,20 @@ export default function SeaLevelGraph(props) {
         .style("fill", "#69b3a2")
         .style("opacity", 0.7)
         .style("stroke", color)
+      .on("mouseover", mouseover)
+      .on("mousemove", mousemove)
+      .on("mouseleave", mouseleave);
   }
+
+  // setup the tooltip
+  const tooltip = d3.select('#dat_id')
+      .style("opacity", 1)
+      .attr("class", "tooltip")
+      .style("background-color", "white")
+      .style("border", "solid")
+      .style("border-width", "1px")
+      .style("border-radius", "5px")
+      .style("padding", "10px");
 
   // setup the event when first mousing over a datum
   const mouseover = function (event, d) {
@@ -123,7 +136,7 @@ export default function SeaLevelGraph(props) {
     tooltip.selectAll('*').remove();
     tooltip
       .append('rect')
-      .attr('width', 325 + parseInt(d[1].toString().length, 10) * 9)
+      .attr('width', 325 + parseInt((d[1]+"").length, 10) * 9)
       .attr('height', 20)
       .attr('stroke', 'black')
       .attr('fill', '#E5FEFF')
