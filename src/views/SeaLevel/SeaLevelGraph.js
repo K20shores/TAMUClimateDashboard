@@ -6,6 +6,7 @@ import { useState, useRef, useEffect} from 'react';
 import * as d3 from 'd3';
 import dataFile from 'assets/csv/sealevels.csv';
 
+
 export default function SeaLevelGraph(props) {
   let canvas = useRef(null);
   let tooltipSvg = useRef(null);
@@ -167,12 +168,18 @@ export default function SeaLevelGraph(props) {
   return (
     // setup the graph and its tooltip svg
     <>
-      <svg id='svg_id' onClick={() => {setShowInfo(!showInfo)}} ref={canvas}>
+      <svg id='svg_id' onClick={() => {setShowInfo(!showInfo)}} ref={canvas} style={{maxWidth:'75%'}}>
       </svg>
       {showInfo &&
-      <div>
-        This is a box of information
+      <center>
+      <div id='caption' style={{maxWidth:'75%', fontSize:'8pt'}}>
+        This graph shows the observed sea-level change since the start of the satellite altimeter record in 1993 (black line). 
+        The red and blue lines represent independent estimates of contributions to the sea-level rise: thermal expansion due to 
+        global heating (red) and added water due mostly to meltwater from glaciers (blue). Added together (purple line), the 
+        estimates track the changes in the sea level very well. This indicates to researchers that they are on the right track! 
+        NOAA Climate.gov graphic, adapted from Figure 3.15a in State of the Climate in 2018 [2].
       </div>
+      </center>
       }
     </>
   );

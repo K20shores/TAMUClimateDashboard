@@ -75,10 +75,10 @@ export default function SeaLevel() {
         }
 
         setData({
-          topex_arr: toArrayOfObject(years, topex_data),
-          jason1_arr: toArrayOfObject(years, jason1_data),
-          jason2_arr: toArrayOfObject(years, jason2_data),
-          jason3_arr: toArrayOfObject(years, jason3_arr),
+          topex_arr: toArrayOfObject(years, topex_data).filter(x => x.data != 0),
+          jason1_arr: toArrayOfObject(years, jason1_data).filter(x => x.data != 0),
+          jason2_arr: toArrayOfObject(years, jason2_data).filter(x => x.data != 0),
+          jason3_arr: toArrayOfObject(years, jason3_arr).filter(x => x.data != 0),
         })
       },
     });
@@ -92,6 +92,7 @@ export default function SeaLevel() {
     <div className="SeaLevel">
       <SeaLevelGraph
         data = {data}
+        style={{maxWidth:'75%'}}
       />
       <Slider
         aria-label="Temperature"
