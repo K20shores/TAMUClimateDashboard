@@ -9,6 +9,8 @@ import dataFile from 'assets/csv/sealevels.csv';
 export default function SeaLevelGraph(props) {
   let canvas = useRef(null);
   let tooltipSvg = useRef(null);
+  let [showInfo, setShowInfo] = useState(false);
+
   let mmToInches = 0.0393701;
   const w = 800;
   const h = 400;
@@ -151,7 +153,14 @@ export default function SeaLevelGraph(props) {
 
   return (
     // setup the graph and its tooltip svg
-    <svg id='svg_id' ref={canvas}>
-    </svg>
+    <>
+      <svg id='svg_id' onClick={() => {setShowInfo(!showInfo)}} ref={canvas}>
+      </svg>
+      {showInfo &&
+      <div>
+        This is a box of information
+      </div>
+      }
+    </>
   );
 }
