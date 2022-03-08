@@ -4,10 +4,21 @@ import React from "react";
 // Import components for data visualizations using d3
 import { useState, useRef, useEffect} from 'react';
 import * as d3 from 'd3';
+import { makeStyles } from "@material-ui/core/styles";
 import dataFile from 'assets/csv/sealevels.csv';
 
+const styles = {
+  seaLevelGraph: {
+    "& rect:hover": {
+      backgroundColor: "red",
+    },
+  },
+};
+
+const useStyles = makeStyles(styles);
 
 export default function SeaLevelGraph(props) {
+  const classes = useStyles();
   let canvas = useRef(null);
   let tooltipSvg = useRef(null);
   let [showInfo, setShowInfo] = useState(false);
@@ -193,7 +204,7 @@ export default function SeaLevelGraph(props) {
       </div>
       </center>
       }
-      <svg id='svg_id' onClick={() => {setShowInfo(!showInfo)}} ref={canvas}>
+      <svg className={classes.seaLevelGraph} id='svg_id' onClick={() => {setShowInfo(!showInfo)}} ref={canvas}>
       </svg>
       {showInfo &&
       <center>
