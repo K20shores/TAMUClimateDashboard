@@ -92,10 +92,10 @@ export default function SeaLevelGraph(props) {
 
     console.log(props.data)
     if (props.data.topex_arr.length > 0) {
-      plotData(svg, props.data.topex_arr, 'topex', '#84a49c')
-      plotData(svg, props.data.jason1_arr, 'jason1', '#f48484')
-      plotData(svg, props.data.jason2_arr, 'jason2', '#3c3444')
-      plotData(svg, props.data.jason3_arr, 'jason3', '#f4bc64')
+      plotData(svg, props.data.topex_arr, classes.topex, '#84a49c')
+      plotData(svg, props.data.jason1_arr, classes.jason1, '#f48484')
+      plotData(svg, props.data.jason2_arr, classes.jason2, '#3c3444')
+      plotData(svg, props.data.jason3_arr, classes.jason3, '#f4bc64')
     }
   }
 
@@ -219,7 +219,7 @@ export default function SeaLevelGraph(props) {
       </div>
       </center>
       }
-      <svg className={classes.seaLevelGraph} id='svg_id' onClick={() => {setShowInfo(!showInfo)}} ref={canvas}>
+      <svg id='svg_id' onClick={() => {setShowInfo(!showInfo)}} ref={canvas}>
       </svg>
       {showInfo &&
       <center>
