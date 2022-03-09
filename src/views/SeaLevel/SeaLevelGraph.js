@@ -8,23 +8,38 @@ import { makeStyles } from "@material-ui/core/styles";
 import dataFile from 'assets/csv/sealevels.csv';
 
 const styles = {
+  point: {
+    opacity: 0.7,
+    width: 4,
+    height: 4,
+    stroke: 'gray',
+    transition: 'all .2s ease-in-out',
+    "&:hover": {
+      width: 30,
+      height: 30,
+    },
+  },
   topex: {
-    "& :hover": {
+    fill: '#84a49c',
+    "&:hover": {
       fill: "#f4dcd4",
     },
   },
   jason1: {
-    "& :hover": {
+    fill: '#f48484',
+    "&:hover": {
       fill: "#f4dcd4",
     },
   },
   jason2: {
-    "& :hover": {
+    fill: '#3c3444',
+    "&:hover": {
       fill: "#f4dcd4",
     },
   },
   jason3: {
-    "& :hover": {
+    fill: '#f4bc64',
+    "&:hover": {
       fill: "#f4dcd4",
     },
   },
@@ -37,13 +52,13 @@ export default function SeaLevelGraph(props) {
   let canvas = useRef(null);
   let tooltipSvg = useRef(null);
   let [showInfo, setShowInfo] = useState(false);
-  React.useEffect(function effectFunction() {
-    if (showInfo) {
-      openTune.play();
-    } else {
-      closeTune.play();
-    }
-  }, [showInfo]);
+  // React.useEffect(function effectFunction() {
+  //   if (showInfo) {
+  //     openTune.play();
+  //   } else {
+  //     closeTune.play();
+  //   }
+  // }, [showInfo]);
 
   let mmToInches = 0.0393701;
   const w = 800;
@@ -92,10 +107,10 @@ export default function SeaLevelGraph(props) {
 
     console.log(props.data)
     if (props.data.topex_arr.length > 0) {
-      plotData(svg, props.data.topex_arr, classes.topex, '#84a49c')
-      plotData(svg, props.data.jason1_arr, classes.jason1, '#f48484')
-      plotData(svg, props.data.jason2_arr, classes.jason2, '#3c3444')
-      plotData(svg, props.data.jason3_arr, classes.jason3, '#f4bc64')
+      plotData(svg, props.data.topex_arr, `${classes.point} ${classes.topex}`)
+      plotData(svg, props.data.jason1_arr, `${classes.point} ${classes.jason1}`)
+      plotData(svg, props.data.jason2_arr, `${classes.point} ${classes.jason2}`)
+      plotData(svg, props.data.jason3_arr, `${classes.point} ${classes.jason3}`)
     }
   }
 
@@ -122,23 +137,18 @@ export default function SeaLevelGraph(props) {
       .attr('transform', 'rotate(270 ' + -50 + ' ' + h / 2 + ')');
   }
 
-  function plotData(svg, data, group, color) {
+  function plotData(svg, data, group) {
     svg.append('g')
       .selectAll(group)
       .data(data)
       .join('rect')
         .attr('x', d => { return xScale(d.year) })
         .attr('y', d => { return yScale(d.data * mmToInches) })
-        .attr('height', 4)
-        .attr('width', 4)
         .attr('class', group)
-        .style("fill", color)
-        .style("opacity", 0.7)
-        .style("stroke", 'gray')
-      .style("align-content", 'center')
-      .on("mouseover", mouseover)
-      .on("mousemove", mousemove)
-      .on("mouseleave", mouseleave);
+      .style("align-content", 'center');
+      // .on("mouseover", mouseover)
+      // .on("mousemove", mousemove)
+      // .on("mouseleave", mouseleave);
   }
 
   // setup the tooltip
