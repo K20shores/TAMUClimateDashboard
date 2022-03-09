@@ -8,9 +8,24 @@ import { makeStyles } from "@material-ui/core/styles";
 import dataFile from 'assets/csv/sealevels.csv';
 
 const styles = {
-  seaLevelGraph: {
+  topex: {
     "& rect:hover": {
-      backgroundColor: "red",
+      fill: "#84a49c",
+    },
+  },
+  jason1: {
+    "& rect:hover": {
+      fill: "#f48484",
+    },
+  },
+  jason2: {
+    "& rect:hover": {
+      fill: "#3c3444",
+    },
+  },
+  jason3: {
+    "& rect:hover": {
+      fill: "#f4bc64",
     },
   },
 };
@@ -42,9 +57,9 @@ export default function SeaLevelGraph(props) {
     .range([h, 0]);
 
   // Declare important things for audio "pop" sound
-  const audioTune = new Audio('https://audio-previews.elements.envatousercontent.com/files/136763507/preview.mp3?response-content-disposition=attachment%3B+filename%3D%225W4SC3P-little-game-shoot.mp3%22');
-  const openTune = new Audio('https://assets.mixkit.co/sfx/download/mixkit-retro-game-notification-212.wav');
-  const closeTune = new Audio('https://audio-previews.elements.envatousercontent.com/files/132226409/preview.mp3?response-content-disposition=attachment%3B+filename%3D%22JT576CN-retro-menu-close.mp3%22');
+  const audioTune = new Audio('');
+  const openTune = new Audio('');
+  const closeTune = new Audio('');
   const [playInLoop, setPlayInLoop] = useState(false);
   // load audio file on component load
   useEffect(() => {
@@ -77,10 +92,10 @@ export default function SeaLevelGraph(props) {
 
     console.log(props.data)
     if (props.data.topex_arr.length > 0) {
-      plotData(svg, props.data.topex_arr, 'topex', 'black')
-      plotData(svg, props.data.jason1_arr, 'topex', 'green')
-      plotData(svg, props.data.jason2_arr, 'topex', 'red')
-      plotData(svg, props.data.jason3_arr, 'topex', 'orange')
+      plotData(svg, props.data.topex_arr, 'topex', '#84a49c')
+      plotData(svg, props.data.jason1_arr, 'jason1', '#f48484')
+      plotData(svg, props.data.jason2_arr, 'jason2', '#3c3444')
+      plotData(svg, props.data.jason3_arr, 'jason3', '#f4bc64')
     }
   }
 
@@ -116,9 +131,10 @@ export default function SeaLevelGraph(props) {
         .attr('y', d => { return yScale(d.data * mmToInches) })
         .attr('height', 4)
         .attr('width', 4)
-        .style("fill", "#69b3a2")
+        .attr('class', group)
+        .style("fill", color)
         .style("opacity", 0.7)
-        .style("stroke", color)
+        .style("stroke", 'gray')
       .style("align-content", 'center')
       .on("mouseover", mouseover)
       .on("mousemove", mousemove)
@@ -170,7 +186,6 @@ export default function SeaLevelGraph(props) {
   }
   // setup the event when first leaving a datum
   const mouseleave = function (event, d) {
-    d3.select(event.currentTarget).style("fill", "green");
     d3.select(event.currentTarget)
       .transition()
       .duration(350)
