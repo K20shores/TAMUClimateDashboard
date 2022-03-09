@@ -9,23 +9,23 @@ import dataFile from 'assets/csv/sealevels.csv';
 
 const styles = {
   topex: {
-    "& rect:hover": {
-      fill: "#84a49c",
+    "& :hover": {
+      fill: "#f4dcd4",
     },
   },
   jason1: {
-    "& rect:hover": {
-      fill: "#f48484",
+    "& :hover": {
+      fill: "#f4dcd4",
     },
   },
   jason2: {
-    "& rect:hover": {
-      fill: "#3c3444",
+    "& :hover": {
+      fill: "#f4dcd4",
     },
   },
   jason3: {
-    "& rect:hover": {
-      fill: "#f4bc64",
+    "& :hover": {
+      fill: "#f4dcd4",
     },
   },
 };
@@ -154,7 +154,6 @@ export default function SeaLevelGraph(props) {
   // setup the event when first mousing over a datum
   const mouseover = function (event, d) {
     audioTune.play();
-    d3.select(event.currentTarget).style("fill", "red");
     tooltip
       .style("opacity", 0)
       .transition()
