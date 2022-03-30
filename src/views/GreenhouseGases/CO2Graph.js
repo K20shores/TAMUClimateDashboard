@@ -33,12 +33,15 @@ export default function CO2Graph(props) {
   let canvas = useRef(null);
   let tooltipSvg = useRef(null);
   let [showInfo, setShowInfo] = useState(false);
+  console.log(props)
 
   const w = 800;
   const h = 400;
-  const xScale = d3.scaleLinear()
-    .domain([1958, 2021])
-    .range([0, w]);
+  const xScale = d3.scaleTime()
+    .domain(d3.extent(props.data, function(d) {
+      return new Date(d.date);
+    }))
+    .range([0,w]);
 
   const yScale = d3.scaleLinear()
     .domain([300, 450])
@@ -98,7 +101,7 @@ export default function CO2Graph(props) {
       .selectAll(group)
       .data(data)
       .join('rect')
-        .attr('x', d => { return xScale(d.date) })
+        .attr('x', d => { return xScale(Date(d.date)) })
         .attr('y', d => { return yScale(d.co2concentration) })
         .attr('class', group)
       .style("align-content", 'center');
