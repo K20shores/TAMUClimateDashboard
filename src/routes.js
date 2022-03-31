@@ -25,10 +25,10 @@ import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
 // core components/views for Admin layout
 import DashboardPage from "views/Dashboard/Dashboard.js";
-import UserProfile from "views/UserProfile/UserProfile.js";
-import TableList from "views/TableList/TableList.js";
+import GreenhouseGases from "views/GreenhouseGases/GreenhouseGases.js";
+import FactorFiction from "views/FactorFiction/FactorFiction.js";
 import Typography from "views/Typography/Typography.js";
-import Icons from "views/Icons/Icons.js";
+import SeaLevel from "views/SeaLevel/SeaLevel.js";
 import Maps from "views/Maps/Maps.js";
 import NotificationsPage from "views/Notifications/Notifications.js";
 import AboutUs from "views/AboutUs/AboutUs.js";
@@ -42,17 +42,17 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/user",
-    name: "User Profile",
+    path: "/GreenhouseGases",
+    name: "Greenhouse Gases",
     icon: Person,
-    component: UserProfile,
+    component: GreenhouseGases,
     layout: "/admin",
   },
   {
-    path: "/table",
-    name: "Table List",
-    icon: "content_paste",
-    component: TableList,
+    path: "/FactorFiction",
+    name: "Fact or Fiction",
+    icon: "fact_check",
+    component: FactorFiction,
     layout: "/admin",
   },
   {
@@ -63,10 +63,10 @@ const dashboardRoutes = [
     layout: "/admin",
   },
   {
-    path: "/icons",
-    name: "Icons",
+    path: "/SeaLevel",
+    name: "Sea Level Rise",
     icon: BubbleChart,
-    component: Icons,
+    component: SeaLevel,
     layout: "/admin",
   },
   {
