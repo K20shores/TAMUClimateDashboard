@@ -13,37 +13,14 @@ import { makeStyles } from "@material-ui/core/styles";
 import { useState, useRef, useEffect } from 'react';
 
 import styles from "assets/jss/material-dashboard-react/views/sealevelStyle.js";
-import Photo0 from 'assets/img/frames/frame0.jpg';
-import Photo1 from 'assets/img/frames/frame1.jpg';
-import Photo2 from 'assets/img/frames/frame2.jpg';
-import Photo3 from 'assets/img/frames/frame3.jpg';
-import Photo4 from 'assets/img/frames/frame4.jpg';
-import Photo5 from 'assets/img/frames/frame5.jpg';
-import Photo6 from 'assets/img/frames/frame6.jpg';
-import Photo7 from 'assets/img/frames/frame7.jpg';
-import Photo8 from 'assets/img/frames/frame8.jpg';
-import Photo9 from 'assets/img/frames/frame9.jpg';
 import dataFile from 'assets/csv/sealevels.csv';
 
 import SeaLevelGraph from './SeaLevelGraph';
 
-const photos = [
-  Photo0,
-  Photo1,
-  Photo2,
-  Photo3,
-  Photo4,
-  Photo5,
-  Photo6,
-  Photo7,
-  Photo8,
-  Photo9,
-];
-
 export default function SeaLevel() {
   const { readRemoteFile } = usePapaParse();
 
-  const [location, setLocation] = useState('Hawaii')
+  const [location, setLocation] = useState('TX')
   // Import data
   const [data, setData] = useState({
     topex_arr: [],
@@ -106,13 +83,12 @@ export default function SeaLevel() {
         onChange={(event) => setLocation(event.target.value)}
         style={{marginTop: '1em'}}
       >
-        <MenuItem value={'Hawaii'}>Hawaii</MenuItem>
-        <MenuItem value={'Texas'}>Texas</MenuItem>
-        <MenuItem value={'Florida'}>Florida</MenuItem>
-        <MenuItem value={'New Jersey'}>New Jersey</MenuItem>
+        <MenuItem value={'TX'}>Texas</MenuItem>
+        <MenuItem value={'FL'}>Florida</MenuItem>
+        <MenuItem value={'NJ'}>New Jersey</MenuItem>
       </Select>
       <p>
-        {location}
+        {location}_{which}.png
       </p>
       <Slider
         aria-label="Temperature"
@@ -120,10 +96,10 @@ export default function SeaLevel() {
         step={1}
         marks
         min={0}
-        max={photos.length}
+        max={10}
         onChange={(_, a) => changePicture(a-1)}
       />
-      <img src={photos[which]} style={{maxWidth:'100%'}}/>
+      <img src={require(`assets/img/frames/${location}_${which}.png`)} style={{maxWidth:'100%'}}/>
     </div>
   );
 }
