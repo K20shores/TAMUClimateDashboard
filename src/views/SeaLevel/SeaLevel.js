@@ -90,6 +90,7 @@ export default function SeaLevel() {
       <Slider
         aria-label="Temperature"
         valueLabelDisplay="auto"
+        valueLabelFormat={(v) => `${v} feet`}
         step={1}
         marks
         min={0}
