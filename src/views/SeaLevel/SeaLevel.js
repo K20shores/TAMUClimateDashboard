@@ -100,10 +100,10 @@ export default function SeaLevel() {
         step={1}
         marks
         min={0}
-        max={photos.length - 1}
-        onChange={(_, a) => changePicture(a)}
+        max={photos.length}
+        onChange={(_, a) => changePicture(a-1)}
       />
-      <img src={photos[which]} />
+      <img src={photos[which]} style={{maxWidth:'100%'}}/>
     </div>
   );
 }

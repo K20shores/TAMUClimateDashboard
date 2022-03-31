@@ -15,8 +15,8 @@ const styles = {
     stroke: 'gray',
     transition: 'all .2s ease-in-out',
     "&:hover": {
-      width: 30,
-      height: 30,
+      width: 10,
+      height: 10,
     },
   },
   topex: {
@@ -61,10 +61,10 @@ export default function SeaLevelGraph(props) {
   // }, [showInfo]);
 
   let mmToInches = 0.0393701;
-  const w = 800;
+  const w = screen.width*0.8;
   const h = 400;
-  const xScale = d3.scaleLinear()
-    .domain([1992, 2021])
+  let xScale = d3.scaleLinear()
+    .domain([1993, 2022])
     .range([0, w]);
 
   const yScale = d3.scaleLinear()
@@ -99,8 +99,8 @@ export default function SeaLevelGraph(props) {
       .attr('width', w)
       .attr('height', h)
       .style('overflow', 'visible')
-      .style('margin-left', '100px')
       .style('margin-bottom', '50px')
+      .style('margin-left', '30px')
 
 
     addAxes(svg, xScale, yScale);
@@ -131,7 +131,7 @@ export default function SeaLevelGraph(props) {
 
     svg.append('text')
       .style('text-anchor', 'middle')
-      .attr('y', h / 2)
+      .attr('y', 210)
       .attr('x', -50)
       .text('Change in global mean sea level')
       .attr('transform', 'rotate(270 ' + -50 + ' ' + h / 2 + ')');
@@ -211,7 +211,7 @@ export default function SeaLevelGraph(props) {
     <>
       <center>
       <div id='graph title' style={{fontSize:'24pt', marginBottom:'20px'}}>
-      Graph Title
+      Sea Levels from 1992 to 2021
       </div>
       </center>
       {showInfo &&
@@ -228,8 +228,9 @@ export default function SeaLevelGraph(props) {
       </div>
       </center>
       }
-      <svg id='svg_id' onClick={() => {setShowInfo(!showInfo)}} ref={canvas}>
-      </svg>
+      <center>
+      <svg id='svg_id' onClick={() => {setShowInfo(!showInfo)}} ref={canvas} width="100%">
+      </svg></center>
       {showInfo &&
       <center>
       <div id='caption' style={{maxWidth:'60%', fontSize:'8pt', background:'-webkit-radial-gradient(center, ellipse cover, rgba(183, 223, 235, 0.5) 0%, rgba(183, 223, 235, 0) 80%)', borderRadius:'20px'}}>
