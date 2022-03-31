@@ -22,6 +22,7 @@ import Person from "@material-ui/icons/Person";
 import People from "@material-ui/icons/People";
 import LibraryBooks from "@material-ui/icons/LibraryBooks";
 import BubbleChart from "@material-ui/icons/BubbleChart";
+import PoolIcon from '@material-ui/icons/Pool';
 import LocationOn from "@material-ui/icons/LocationOn";
 import Notifications from "@material-ui/icons/Notifications";
 // core components/views for Admin layout
@@ -45,7 +46,7 @@ const dashboardRoutes = [
   {
     path: "/GreenhouseGases",
     name: "Greenhouse Gases",
-    icon: Person,
+    icon: BubbleChart,
     component: GreenhouseGases,
     layout: "/admin",
   },
@@ -66,7 +67,7 @@ const dashboardRoutes = [
   {
     path: "/SeaLevel",
     name: "Sea Level Rise",
-    icon: BubbleChart,
+    icon: PoolIcon,
     component: SeaLevel,
     layout: "/admin",
   },
