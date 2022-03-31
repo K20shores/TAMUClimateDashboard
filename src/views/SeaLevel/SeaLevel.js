@@ -3,6 +3,9 @@ import React from "react";
 import { usePapaParse } from 'react-papaparse';
 
 import Slider from '@mui/material/Slider';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -40,7 +43,7 @@ const photos = [
 export default function SeaLevel() {
   const { readRemoteFile } = usePapaParse();
 
-
+  const [location, setLocation] = useState('Hawaii')
   // Import data
   const [data, setData] = useState({
     topex_arr: [],
@@ -94,6 +97,23 @@ export default function SeaLevel() {
         data = {data}
         style={{maxWidth:'75%'}}
       />
+      <InputLabel id="location-selector-label">Select Location</InputLabel>
+      <Select
+        labelId="location-selector-label"
+        id="location-selector"
+        value={location}
+        label="Location"
+        onChange={(event) => setLocation(event.target.value)}
+        style={{marginTop: '1em'}}
+      >
+        <MenuItem value={'Hawaii'}>Hawaii</MenuItem>
+        <MenuItem value={'Texas'}>Texas</MenuItem>
+        <MenuItem value={'Florida'}>Florida</MenuItem>
+        <MenuItem value={'New Jersey'}>New Jersey</MenuItem>
+      </Select>
+      <p>
+        {location}
+      </p>
       <Slider
         aria-label="Temperature"
         valueLabelDisplay="auto"
