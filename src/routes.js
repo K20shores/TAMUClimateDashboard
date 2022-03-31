@@ -1,3 +1,4 @@
+/*eslint-disable*/
 /*!
 
 =========================================================
@@ -34,13 +35,13 @@ import NotificationsPage from "views/Notifications/Notifications.js";
 import AboutUs from "views/AboutUs/AboutUs.js";
 
 const dashboardRoutes = [
-  {
-    path: "/dashboard",
-    name: "Dashboard",
-    icon: Dashboard,
-    component: DashboardPage,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/dashboard",
+  //   name: "Dashboard",
+  //   icon: Dashboard,
+  //   component: DashboardPage,
+  //   layout: "/admin",
+  // },
   {
     path: "/GreenhouseGases",
     name: "Greenhouse Gases",
@@ -55,13 +56,13 @@ const dashboardRoutes = [
     component: FactorFiction,
     layout: "/admin",
   },
-  {
-    path: "/typography",
-    name: "Typography",
-    icon: LibraryBooks,
-    component: Typography,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/typography",
+  //   name: "Typography",
+  //   icon: LibraryBooks,
+  //   component: Typography,
+  //   layout: "/admin",
+  // },
   {
     path: "/SeaLevel",
     name: "Sea Level Rise",
@@ -69,27 +70,27 @@ const dashboardRoutes = [
     component: SeaLevel,
     layout: "/admin",
   },
-  {
-    path: "/maps",
-    name: "Maps",
-    icon: LocationOn,
-    component: Maps,
-    layout: "/admin",
-  },
-  {
-    path: "/notifications",
-    name: "Notifications",
-    icon: Notifications,
-    component: NotificationsPage,
-    layout: "/admin",
-  },
-  {
-    path: "/about-us",
-    name: "About Us",
-    icon: People,
-    component: AboutUs,
-    layout: "/admin",
-  },
+  // {
+  //   path: "/maps",
+  //   name: "Maps",
+  //   icon: LocationOn,
+  //   component: Maps,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/notifications",
+  //   name: "Notifications",
+  //   icon: Notifications,
+  //   component: NotificationsPage,
+  //   layout: "/admin",
+  // },
+  // {
+  //   path: "/about-us",
+  //   name: "About Us",
+  //   icon: People,
+  //   component: AboutUs,
+  //   layout: "/admin",
+  // },
 ];
 
 export default dashboardRoutes;
