@@ -1,4 +1,6 @@
+/*eslint-disable*/
 import React from "react";
+import { usePapaParse } from "react-papaparse";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // core components
@@ -7,6 +9,12 @@ import GridContainer from "components/Grid/GridContainer.js";
 import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
+import CO2Graph from "./CO2Graph";
+import dataFile from "assets/csv/co2data.csv";
+import { useState, useEffect } from "react";
+import Spectrum from "assets/img/WLSpectrum.jpg";
+import GasConcentration from "assets/img/GlobalGas2015.png";
+import USGasBD from "assets/img/USGasBD.png";
 
 const styles = {
   cardCategoryWhite: {
@@ -20,25 +28,26 @@ const styles = {
     color: "#FFFFFF",
     marginTop: "0px",
     minHeight: "auto",
-    fontWeight: "500",
+    fontWeight: "300",
     fontFamily: "'Roboto', 'Helvetica', 'Arial', sans-serif",
-    marginBottom: "3px",
+    fontSize: "26pt",
+    marginBottom: "6px",
     textDecoration: "none",
   },
   WAGG: {
     color: "#000000",
     fontWeight: "300",
-    fontSize: "20px",
+    fontSize: "20pt",
   },
   WAGGD: {
-    fontSize: "17px",
+    fontSize: "16pt",
   },
   GGC: {
-    fontSize: "20px",
+    fontSize: "20pt",
     fontWeight: "300",
   },
   CIGG: {
-    fontSize: "20px",
+    fontSize: "20pt",
     fontWeight: "300",
   },
   MORAG: {
@@ -50,7 +59,31 @@ const styles = {
 const useStyles = makeStyles(styles);
 
 export default function GreenhouseGases() {
+  const [data, setData] = useState([]);
+  const { readRemoteFile } = usePapaParse();
   const classes = useStyles();
+  useEffect(() => {
+    readRemoteFile(dataFile, {
+      complete: (results) => {
+        console.log(results);
+
+        results.data = results.data.slice(1)
+
+        let date = results.data.map(x => x[1]);
+        let CO2concentration = results.data.map(x => x[2]);
+        console.log(date, CO2concentration);
+        let toArrayOfObject = (y, d) => {
+          return d.map((x, idx) => {
+            return {
+              date: y[idx],
+              co2concentration: x
+            }
+          })
+        }
+        setData(toArrayOfObject(date, CO2concentration));
+      },
+    });
+  }, []);
   return (
     <div>
       <GridContainer>
@@ -62,14 +95,29 @@ export default function GreenhouseGases() {
             </CardHeader>
             <CardBody>
               <p className={classes.WAGG}>What are Greenhouse Gases?</p>
-              <p className={classes.WAGGD}>Greenhouse Gases are gases that</p>
+              <p className={classes.WAGGD}>Greenhouse Gases are gases that produce 
+              the greenhouse effect. The greenhouse effect is when gases in the atmosphere 
+              trap heat that is produced by the Sun. The Sun emits radiant light waves that 
+              hit and warm the earth and then bounce off of it in the form of invisible infrared 
+              light waves. The greenhouse effect occurs when the waves are trapped by gases in 
+              the atmosphere on their way out. This greenhouse effect causes the earth to heat 
+              up even more.</p>
+              <img src={Spectrum} alt="Spectrum" />
               <p className={classes.GGC}>Concentration of Greenhouse Gases</p>
+              <img src={GasConcentration} alt="GasConcentration"/>
               <p className={classes.CIGG}>
                 Causes of Increase of Greenhouse Gases
               </p>
               <p className={classes.MORAG}>
-                Map of Refineries Around the Globe
+              Humans have increased the concentration of greenhouse gases significantly. 
+              Carbon dioxide accounts for over 75% of human caused emissions into the atmosphere. 
+              This occurs from things like the burning of oil, coal and gas, and deforestation.
               </p>
+              <img src={USGasBD} alt="USGasBD" style={{width:"32%"}} />
+              <CO2Graph
+              data = {data}
+        style={{maxWidth:'75%'}}
+      />
             </CardBody>
           </Card>
         </GridItem>
