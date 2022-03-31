@@ -87,9 +87,6 @@ export default function SeaLevel() {
         <MenuItem value={'FL'}>Florida</MenuItem>
         <MenuItem value={'NJ'}>New Jersey</MenuItem>
       </Select>
-      <p>
-        {location}_{which}.png
-      </p>
       <Slider
         aria-label="Temperature"
         valueLabelDisplay="auto"
@@ -97,9 +94,9 @@ export default function SeaLevel() {
         marks
         min={0}
         max={10}
-        onChange={(_, a) => changePicture(a-1)}
+        onChange={(_, a) => changePicture(a)}
       />
-      <img src={require(`assets/img/frames/${location}_${which}.png`)} style={{maxWidth:'100%'}}/>
+      <img src={`../images/frames/${location}_${which}.png`} style={{maxWidth:'100%'}}/>
     </div>
   );
 }
