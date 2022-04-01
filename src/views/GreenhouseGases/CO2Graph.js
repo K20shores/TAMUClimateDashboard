@@ -14,8 +14,8 @@ const styles = {
     stroke: 'gray',
     transition: 'all .2s ease-in-out',
     "&:hover": {
-      width: 30,
-      height: 30,
+      width: 15,
+      height: 15,
     },
   },
   co2: {
@@ -31,11 +31,13 @@ const useStyles = makeStyles(styles);
 export default function CO2Graph(props) {
   const classes = useStyles();
   let canvas = useRef(null);
-  let tooltipSvg = useRef(null);
+  let tooltipRef = useRef(null);
   let [showInfo, setShowInfo] = useState(false);
+  const formatDate = d3.timeFormat("%b %Y");
 
-  const w = 800;
+  const w = props.width * .8;
   const h = 400;
+  // https://sharkcoder.com/data-visualization/d3-react
   const xScale = d3.scaleTime()
     .domain(d3.extent(props.data, function(d) {
       return new Date(d.Datetime);
@@ -47,8 +49,6 @@ export default function CO2Graph(props) {
     .domain([yMinValue, yMaxValue])
     .range([h, 0]);
 
-
-  // set up the graph to display data
   useEffect(() => {
     drawGraph()
   }, [
@@ -63,7 +63,13 @@ export default function CO2Graph(props) {
       .style('overflow', 'visible')
       .style('margin-left', '100px')
       .style('margin-bottom', '50px')
-
+    d3.select(tooltipRef.current)
+      .style("opacity", 1)
+      .style("background-color", "white")
+      .style("border", "solid")
+      .style("border-width", "1px")
+      .style("border-radius", "5px")
+      .style("padding", "10px");
 
     addAxes(svg, xScale, yScale);
 
@@ -107,64 +113,40 @@ export default function CO2Graph(props) {
           return yScale(d.average) 
         })
         .attr('class', group)
-      .style("align-content", 'center');
-      // .on("mouseover", mouseover)
-      // .on("mousemove", mousemove)
-      // .on("mouseleave", mouseleave);
+      .style("align-content", 'center')
+      .on("mouseover", mouseover)
+      .on("mousemove", mousemove)
+      .on("mouseleave", mouseleave);
   }
-
-  // setup the tooltip
-  const tooltip = d3.select('#dat_id')
-      .style("opacity", 1)
-      .attr("class", "tooltip")
-      .style("background-color", "white")
-      .style("border", "solid")
-      .style("border-width", "1px")
-      .style("border-radius", "5px")
-      .style("padding", "10px");
 
   // setup the event when first mousing over a datum
   const mouseover = function (event, d) {
-    audioTune.play();
+    const tooltip = d3.select(tooltipRef.current);
     tooltip
       .style("opacity", 0)
       .transition()
-      .duration(500)
+      .duration(100)
       .style("opacity", 1);
-    d3.select(event.currentTarget)
-      .transition()
-      .duration(350)
-      .attr('width', 8)
-      .attr('height', 8);
   }
   // setup the event when moving the mouse
   const mousemove = function (event, d) {
+    const [x, y] = d3.pointer(event)
+    const tooltip = d3.select(tooltipRef.current);
     tooltip.selectAll('*').remove();
     tooltip
-      .append('rect')
-      .attr('width', 325 + parseInt((d[1]+"").length, 10) * 9)
-      .attr('height', 20)
-      .attr('stroke', 'black')
-      .attr('fill', '#E5FEFF')
-    tooltip
-      .attr('x', event.pageX / 2)
-      .attr('y', event.pageY / 2 + 100)
       .append('text')
-      .attr('y', 15)
-      .text(`The sea level in ${parseInt(d[0])} relative to 2000 levels is: ${d[1]}.`)
-        .attr('x', 3*w/4)
-        .attr('y', h+50);
+        .text(`${d.average} ppm on ${formatDate(d.Datetime)}`)
+        .attr('x', 10)
+        .attr('y', 20)
+        .attr("font-size", "2em")
+        .attr("color", "black")
   }
   // setup the event when first leaving a datum
   const mouseleave = function (event, d) {
-    d3.select(event.currentTarget)
-      .transition()
-      .duration(350)
-      .attr('width', 4)
-      .attr('height', 4);
+    const tooltip = d3.select(tooltipRef.current);
     tooltip
       .transition()
-      .duration(350)
+      .duration(150)
       .style("opacity", 0);
   }
 
@@ -186,6 +168,7 @@ export default function CO2Graph(props) {
       </center>
       }
       <svg id='svg_id' onClick={() => {setShowInfo(!showInfo)}} ref={canvas}>
+        <svg id='tooltip' ref={tooltipRef}/>
       </svg>
       {showInfo &&
       <center>
