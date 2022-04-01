@@ -33,18 +33,18 @@ export default function CO2Graph(props) {
   let canvas = useRef(null);
   let tooltipSvg = useRef(null);
   let [showInfo, setShowInfo] = useState(false);
-  console.log(props)
 
   const w = 800;
   const h = 400;
   const xScale = d3.scaleTime()
     .domain(d3.extent(props.data, function(d) {
-      return new Date(d.date);
+      return new Date(d.Datetime);
     }))
     .range([0,w]);
 
+  const yMinValue = d3.min(props.data, (d) => d.average), yMaxValue = d3.max(props.data, (d) => d.average);
   const yScale = d3.scaleLinear()
-    .domain([300, 450])
+    .domain([yMinValue, yMaxValue])
     .range([h, 0]);
 
 
@@ -67,7 +67,6 @@ export default function CO2Graph(props) {
 
     addAxes(svg, xScale, yScale);
 
-    console.log(props.data)
     if (props) {
       plotData(svg, props.data, `${classes.point} ${classes.co2}`)
     }
@@ -101,8 +100,12 @@ export default function CO2Graph(props) {
       .selectAll(group)
       .data(data)
       .join('rect')
-        .attr('x', d => { return xScale(Date(d.date)) })
-        .attr('y', d => { return yScale(d.co2concentration) })
+        .attr('x', d => { 
+          return xScale(d.Datetime) 
+        })
+        .attr('y', d => { 
+          return yScale(d.average) 
+        })
         .attr('class', group)
       .style("align-content", 'center');
       // .on("mouseover", mouseover)

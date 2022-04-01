@@ -1,5 +1,6 @@
 /*eslint-disable*/
 import React from "react";
+import * as d3 from 'd3';
 import { usePapaParse } from "react-papaparse";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
@@ -63,25 +64,13 @@ export default function GreenhouseGases() {
   const { readRemoteFile } = usePapaParse();
   const classes = useStyles();
   useEffect(() => {
-    readRemoteFile(dataFile, {
-      complete: (results) => {
-        console.log(results);
-
-        results.data = results.data.slice(1)
-
-        let date = results.data.map(x => x[1]);
-        let CO2concentration = results.data.map(x => x[2]);
-        console.log(date, CO2concentration);
-        let toArrayOfObject = (y, d) => {
-          return d.map((x, idx) => {
-            return {
-              date: y[idx],
-              co2concentration: x
-            }
-          })
-        }
-        setData(toArrayOfObject(date, CO2concentration));
-      },
+    d3.csv(dataFile).then((d) => {
+        const parseDate = d3.timeParse("%m/%d/%Y");
+        d.forEach((i) => {
+            i.Datetime = parseDate(i.Datetime);
+            i.average = Number(i.average);
+        });
+        setData(d);
     });
   }, []);
   return (
@@ -115,9 +104,9 @@ export default function GreenhouseGases() {
               </p>
               <img src={USGasBD} alt="USGasBD" style={{width:"32%"}} />
               <CO2Graph
-              data = {data}
-        style={{maxWidth:'75%'}}
-      />
+                data = {data}
+                style={{maxWidth:'75%'}}
+              />
             </CardBody>
           </Card>
         </GridItem>
