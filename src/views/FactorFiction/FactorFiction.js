@@ -11,21 +11,64 @@ import Card from "components/Card/Card.js";
 import CardHeader from "components/Card/CardHeader.js";
 import CardBody from "components/Card/CardBody.js";
 
-import avatar from "assets/img/faces/marc.jpg";
+import avatar from "assets/img/faces/snow-leopard.jpg";
 
 const statements = [
   {
-    title: "fact",
+    title:
+      "Over a million species of animals are at risk of extinction due to climate change.",
     statements: "Dogs are cats",
-    validity: false,
+    validity: true,
     image: "something",
+    true_message: "You're correct! This in, in fact, a true statement.",
+    false_message: "This actually is a TRUE statement.",
   },
 
   {
-    title: "fact 2",
+    title:
+      "If all the polar ice caps in the world melted, the Earth's sea level would rise by 200 feet.",
+    statements: "Dogs are cats",
+    validity: true,
+    image: "something",
+    true_message: "You're correct! This is, in fact, a true statement.",
+    false_message: "This actually is a TRUE statement.",
+  },
+
+  {
+    title: "The Earth's climate has always changed.",
     statements: "Dogs are cats",
     validity: false,
     image: "something",
+    true_message: ".",
+    false_message:
+      "You're correct! This is, in fact, a myth. While the Earth's climate has varied for billions of years, the rapid change we see today isn't natural. The warming we currently see with the Earth's climate would normally take hundreds of thousands of years, but instead has occured over the last few decades due to an increase in green house gases in the Earth's atmosphere. On record, 17 of the 18 warmest years globally have all taken place after 2001.",
+  },
+
+  {
+    title: "fact 4",
+    statements: "Dogs are cats",
+    validity: false,
+    image: "something",
+    true_message: ".",
+    false_message: ".",
+  },
+
+  {
+    title: "fact 5",
+    statements: "Dogs are cats",
+    validity: false,
+    image: "something",
+    true_message: ".",
+    false_message: ".",
+  },
+
+  {
+    title: "fact 6",
+    statements: "Dogs are cats",
+    validity: false,
+    image: "something",
+    true_message: ".",
+    false_message: ".",
   },
 ];
 
@@ -65,6 +108,15 @@ export default function FactorFiction() {
   const classes = useStyles();
   const [ShowFact, setShowFact] = React.useState(false);
   const [WhichFact, setFact] = React.useState(0);
+  const [Answer, setAnswer] = React.useState(false);
+
+  function onNextButtonClick() {
+    if (WhichFact < statements.length - 1) {
+      setFact(WhichFact + 1);
+    } else {
+      setFact(0);
+    }
+  }
 
   React.useEffect(() => {
     // Specify how to clean up after this effect:
@@ -98,24 +150,42 @@ export default function FactorFiction() {
             <div className={classes.typo}>
               <div className={classes.note}></div>
               <p>
-                Sample paragraph containing a percieved factual statement about
-                climate change. Users must determine whether it is actually true
-                or not.
+                Species both on land and in the ocean have insuffiecient
+                habitats for long-term survial due to climate change, putting
+                them at risk of extinction within the next few decades.
               </p>
             </div>
-            <Button color="success" onClick={() => setShowFact(true)}>
+            <Button
+              color="success"
+              onClick={() => {
+                setAnswer(true == statements[WhichFact].validity);
+                setShowFact(true);
+              }}
+            >
               Fact
             </Button>
             <Snackbar
               place="tr"
               color="info"
-              message="Welcome to MATERIAL DASHBOARD React - a beautiful freebie for every web developer."
+              message={
+                Answer
+                  ? statements[WhichFact].true_message
+                  : statements[WhichFact].false_message
+              }
               open={ShowFact}
               closeNotification={() => setShowFact(false)}
               close
             />
-            <Button color="danger">Fiction</Button>
-            <Button color="info" onClick={() => setFact(WhichFact + 1)}>
+            <Button
+              color="danger"
+              onClick={() => {
+                setAnswer(false == statements[WhichFact].validity);
+                setShowFact(true);
+              }}
+            >
+              Fiction
+            </Button>
+            <Button color="info" onClick={onNextButtonClick}>
               Next fact
             </Button>
           </CardBody>
