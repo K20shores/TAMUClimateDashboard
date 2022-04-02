@@ -8,6 +8,8 @@ import Select from '@mui/material/Select';
 import MenuItem from '@mui/material/MenuItem';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import flooding from 'assets/img/flooding.jpg';
+import water from 'assets/img/water.jpg';
 
 // Import components for data visualizations using d3
 import { useState, useRef, useEffect } from 'react';
@@ -98,6 +100,27 @@ export default function SeaLevel() {
         onChange={(_, a) => changePicture(a)}
       />
       <img src={`../images/frames/${location}_${which}.png`} style={{maxWidth:'100%'}}/>
+      <br></br><br></br><br></br>
+      <div>
+        <img src={flooding} alt='Flooding' width='50%' style={{display:'block',marginLeft:'auto',marginRight:'auto'}}/>
+        <center>
+          <br></br>
+          <div id='caption' style={{maxWidth:'40%', fontSize:'12pt', background:'-webkit-radial-gradient(center, ellipse cover, rgba(183, 223, 235, 0.5) 0%, rgba(183, 223, 235, 0) 80%)', borderRadius:'25px'}}>
+            As sea levels rise, the intensity of storm surges, flooding, and damage to coastal areas increases.This poses not only a serious threat to fragile coastal ecosystems around the world,
+            but also residents in the area. Many people may become displaced by sea level rise alone and need to seek safer homes.
+          </div>
+        </center>
+      </div>
+      <br></br><br></br><br></br>
+      <img src={water} alt='Pottable Water' width='50%' style={{display:'block',marginLeft:'auto',marginRight:'auto'}}/>
+      <center>
+        <br></br>
+        <div id='caption' style={{maxWidth:'40%', fontSize:'12pt', background:'-webkit-radial-gradient(center, ellipse cover, rgba(183, 223, 235, 0.5) 0%, rgba(183, 223, 235, 0) 80%)', borderRadius:'25px'}}>
+          Saltwater intrusion is the process of saltwater contaminating pottable drinking water as the sea levels rise. Salt dissolves staggeringly easy in water, forming strong chemical bonds — chemical bonds which are hard to break.
+          Many coastal communities around the United States currently experience saltwater contamination, a problem which could be seen for decades. In Cape May, for example, saltwater intrusion has caused the closure of 120 water
+          supply wells since the 1940s.
+        </div>
+      </center>
     </div>
   );
 }
