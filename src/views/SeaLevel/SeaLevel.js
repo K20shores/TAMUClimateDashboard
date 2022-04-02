@@ -3,44 +3,26 @@ import React from "react";
 import { usePapaParse } from 'react-papaparse';
 
 import Slider from '@mui/material/Slider';
+import InputLabel from '@mui/material/InputLabel';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+import flooding from 'assets/img/flooding.jpg';
+import water from 'assets/img/water.jpg';
 
 // Import components for data visualizations using d3
 import { useState, useRef, useEffect } from 'react';
 
 import styles from "assets/jss/material-dashboard-react/views/sealevelStyle.js";
-import Photo0 from 'assets/img/frames/frame0.jpg';
-import Photo1 from 'assets/img/frames/frame1.jpg';
-import Photo2 from 'assets/img/frames/frame2.jpg';
-import Photo3 from 'assets/img/frames/frame3.jpg';
-import Photo4 from 'assets/img/frames/frame4.jpg';
-import Photo5 from 'assets/img/frames/frame5.jpg';
-import Photo6 from 'assets/img/frames/frame6.jpg';
-import Photo7 from 'assets/img/frames/frame7.jpg';
-import Photo8 from 'assets/img/frames/frame8.jpg';
-import Photo9 from 'assets/img/frames/frame9.jpg';
 import dataFile from 'assets/csv/sealevels.csv';
 
 import SeaLevelGraph from './SeaLevelGraph';
 
-const photos = [
-  Photo0,
-  Photo1,
-  Photo2,
-  Photo3,
-  Photo4,
-  Photo5,
-  Photo6,
-  Photo7,
-  Photo8,
-  Photo9,
-];
-
 export default function SeaLevel() {
   const { readRemoteFile } = usePapaParse();
 
-
+  const [location, setLocation] = useState('TX')
   // Import data
   const [data, setData] = useState({
     topex_arr: [],
@@ -94,16 +76,51 @@ export default function SeaLevel() {
         data = {data}
         style={{maxWidth:'75%'}}
       />
+      <InputLabel id="location-selector-label">Select Location</InputLabel>
+      <Select
+        labelId="location-selector-label"
+        id="location-selector"
+        value={location}
+        label="Location"
+        onChange={(event) => setLocation(event.target.value)}
+        style={{marginTop: '1em'}}
+      >
+        <MenuItem value={'TX'}>Texas</MenuItem>
+        <MenuItem value={'FL'}>Florida</MenuItem>
+        <MenuItem value={'NJ'}>New Jersey</MenuItem>
+      </Select>
       <Slider
         aria-label="Temperature"
         valueLabelDisplay="auto"
+        valueLabelFormat={(v) => `${v} feet`}
         step={1}
         marks
         min={0}
-        max={photos.length - 1}
+        max={10}
         onChange={(_, a) => changePicture(a)}
       />
-      <img src={photos[which]} />
+      <img src={`../images/frames/${location}_${which}.png`} style={{maxWidth:'100%'}}/>
+      <br></br><br></br><br></br>
+      <div>
+        <img src={flooding} alt='Flooding' width='50%' style={{display:'block',marginLeft:'auto',marginRight:'auto'}}/>
+        <center>
+          <br></br>
+          <div id='caption' style={{maxWidth:'40%', fontSize:'12pt', background:'-webkit-radial-gradient(center, ellipse cover, rgba(183, 223, 235, 0.5) 0%, rgba(183, 223, 235, 0) 80%)', borderRadius:'25px'}}>
+            As sea levels rise, the intensity of storm surges, flooding, and damage to coastal areas increases.This poses not only a serious threat to fragile coastal ecosystems around the world,
+            but also residents in the area. Many people may become displaced by sea level rise alone and need to seek safer homes.
+          </div>
+        </center>
+      </div>
+      <br></br><br></br><br></br>
+      <img src={water} alt='Pottable Water' width='50%' style={{display:'block',marginLeft:'auto',marginRight:'auto'}}/>
+      <center>
+        <br></br>
+        <div id='caption' style={{maxWidth:'40%', fontSize:'12pt', background:'-webkit-radial-gradient(center, ellipse cover, rgba(183, 223, 235, 0.5) 0%, rgba(183, 223, 235, 0) 80%)', borderRadius:'25px'}}>
+          Saltwater intrusion is the process of saltwater contaminating pottable drinking water as the sea levels rise. Salt dissolves staggeringly easy in water, forming strong chemical bonds — chemical bonds which are hard to break.
+          Many coastal communities around the United States currently experience saltwater contamination, a problem which could be seen for decades. In Cape May, for example, saltwater intrusion has caused the closure of 120 water
+          supply wells since the 1940s.
+        </div>
+      </center>
     </div>
   );
 }

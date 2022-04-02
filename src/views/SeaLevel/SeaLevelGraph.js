@@ -15,8 +15,8 @@ const styles = {
     stroke: 'gray',
     transition: 'all .2s ease-in-out',
     "&:hover": {
-      width: 30,
-      height: 30,
+      width: 10,
+      height: 10,
     },
   },
   topex: {
@@ -61,10 +61,10 @@ export default function SeaLevelGraph(props) {
   // }, [showInfo]);
 
   let mmToInches = 0.0393701;
-  const w = 800;
+  const w = screen.width*0.8;
   const h = 400;
-  const xScale = d3.scaleLinear()
-    .domain([1992, 2021])
+  let xScale = d3.scaleLinear()
+    .domain([1993, 2022])
     .range([0, w]);
 
   const yScale = d3.scaleLinear()
@@ -99,8 +99,8 @@ export default function SeaLevelGraph(props) {
       .attr('width', w)
       .attr('height', h)
       .style('overflow', 'visible')
-      .style('margin-left', '100px')
       .style('margin-bottom', '50px')
+      .style('margin-left', '30px')
 
 
     addAxes(svg, xScale, yScale);
@@ -127,13 +127,13 @@ export default function SeaLevelGraph(props) {
       .style('text-anchor', 'middle')
       .attr('x', w / 2)
       .attr('y', h + 50)
-      .text('Year');
+      .text('YEAR');
 
     svg.append('text')
       .style('text-anchor', 'middle')
-      .attr('y', h / 2)
+      .attr('y', 210)
       .attr('x', -50)
-      .text('Change in global mean sea level')
+      .text('Change in global mean sea level (INCHES)')
       .attr('transform', 'rotate(270 ' + -50 + ' ' + h / 2 + ')');
   }
 
@@ -211,33 +211,27 @@ export default function SeaLevelGraph(props) {
     <>
       <center>
       <div id='graph title' style={{fontSize:'24pt', marginBottom:'20px'}}>
-      Graph Title
+      Sea Levels from 1992 to 2021
       </div>
       </center>
       {showInfo &&
       <center>
       <div id='caption' style={{maxWidth:'85%', fontSize:'12pt', background:'-webkit-radial-gradient(center, ellipse cover, rgba(183, 223, 235, 0.5) 0%, rgba(183, 223, 235, 0) 80%)', borderRadius:'25px'}}>
-      Satellite altimeters prove themselves to be a valuable tool for climate change researchers by providing a near-global coverage 
-      of the ocean sea-levels for nearly the past three decades [1]. As these satellites get older and they yield more data, the 
-      influence of short-term variability is reduced, and a clear trend associated with our human activity may emerge [1]. Some 
-      places, like the northeastern Pacific near Hawaii, seem particularly noteable for researchers due to their strange sea-level 
-      variations over the past three decades [1]. The measured trends in these regions are still impacted by short-term, natural changes; 
-      however, with more and more data the impact of human-related activities can be better understood. The satellite altimeter record of 
-      sea-level change derives from data provided by satellite altimeters including the Envisat, TOPEX/Poseiden, Jason-1, OSTM/Jason-2, 
-      and Jason-3.
+      Satellite altimeters have earned their spot as a vital tool on a climate change researcher's toolbelt. These satellites provide near-global coverage of the ocean sea-levels for nearly the past three decades!
+      Three decades is a lot of data for the modern researcher to analyze and create a climate model. As these satellites get older and yield more data, these climate models can make it increasingly clear what role humans play in the changing of the climate.
+      The satellite altimeter record of sea-level change derives from data provided by satellite altimeters including the Envisat, TOPEX/Poseiden, Jason-1, OSTM/Jason-2, and Jason-3.
       </div>
       </center>
       }
-      <svg id='svg_id' onClick={() => {setShowInfo(!showInfo)}} ref={canvas}>
-      </svg>
+      <center>
+      <svg id='svg_id' onClick={() => {setShowInfo(!showInfo)}} ref={canvas} width="100%">
+      </svg></center>
       {showInfo &&
       <center>
-      <div id='caption' style={{maxWidth:'60%', fontSize:'8pt', background:'-webkit-radial-gradient(center, ellipse cover, rgba(183, 223, 235, 0.5) 0%, rgba(183, 223, 235, 0) 80%)', borderRadius:'20px'}}>
-        This graph shows the observed sea-level change since the start of the satellite altimeter record in 1993 (black line). 
-        The red and blue lines represent independent estimates of contributions to the sea-level rise: thermal expansion due to 
-        global heating (red) and added water due mostly to meltwater from glaciers (blue). Added together (purple line), the 
-        estimates track the changes in the sea level very well. This indicates to researchers that they are on the right track! 
-        NOAA Climate.gov graphic, adapted from Figure 3.15a in State of the Climate in 2018 [2].
+      <div id='caption' style={{maxWidth:'60%', lineHeight:'100%', fontSize:'10pt', background:'-webkit-radial-gradient(center, ellipse cover, rgba(183, 223, 235, 0.5) 0%, rgba(183, 223, 235, 0) 80%)', borderRadius:'20px'}}>
+        This graph shows the sea-level change since the start of the satellite altimeter record in 1993. The dataset includes data from Topex (green), Jason-1 (red), Jason-2 (black), and the Jason-3 (yellow) missions.
+        The Topex was the earliest satellite altimeter and began data collection in 1993. Compared to the more recent Jason missions, it had a lot more uncertainty in its data set. Can you see the trend become more defined with each new satellite? 
+        <a href="https://www.climate.gov/news-features/understanding-climate/climate-change-global-sea-level" color="red" target="_blank"> Read more!</a>
       </div>
       </center>
       }
