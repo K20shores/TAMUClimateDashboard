@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/TAMUClimateDashboard/static/css/main.3efd2de9.chunk.css",
+    "main.js": "/TAMUClimateDashboard/static/js/main.e364a9d1.chunk.js",
+    "main.js.map": "/TAMUClimateDashboard/static/js/main.e364a9d1.chunk.js.map",
+    "runtime-main.js": "/TAMUClimateDashboard/static/js/runtime-main.216cbb3d.js",
+    "runtime-main.js.map": "/TAMUClimateDashboard/static/js/runtime-main.216cbb3d.js.map",
+    "static/css/2.1881a404.chunk.css": "/TAMUClimateDashboard/static/css/2.1881a404.chunk.css",
+    "static/js/2.bba0d714.chunk.js": "/TAMUClimateDashboard/static/js/2.bba0d714.chunk.js",
+    "static/js/2.bba0d714.chunk.js.map": "/TAMUClimateDashboard/static/js/2.bba0d714.chunk.js.map",
+    "index.html": "/TAMUClimateDashboard/index.html",
+    "static/css/2.1881a404.chunk.css.map": "/TAMUClimateDashboard/static/css/2.1881a404.chunk.css.map",
+    "static/css/main.3efd2de9.chunk.css.map": "/TAMUClimateDashboard/static/css/main.3efd2de9.chunk.css.map",
+    "static/js/2.bba0d714.chunk.js.LICENSE.txt": "/TAMUClimateDashboard/static/js/2.bba0d714.chunk.js.LICENSE.txt",
+    "static/js/main.e364a9d1.chunk.js.LICENSE.txt": "/TAMUClimateDashboard/static/js/main.e364a9d1.chunk.js.LICENSE.txt",
+    "static/media/GlobalGas2015.08fcc158.png": "/TAMUClimateDashboard/static/media/GlobalGas2015.08fcc158.png",
+    "static/media/USGasBD.ba609137.png": "/TAMUClimateDashboard/static/media/USGasBD.ba609137.png",
+    "static/media/WLSpectrum.7034b3cc.jpg": "/TAMUClimateDashboard/static/media/WLSpectrum.7034b3cc.jpg",
+    "static/media/co2data.81d83d19.csv": "/TAMUClimateDashboard/static/media/co2data.81d83d19.csv",
+    "static/media/flooding.1c57d485.jpg": "/TAMUClimateDashboard/static/media/flooding.1c57d485.jpg",
+    "static/media/logo.a2f7285d.png": "/TAMUClimateDashboard/static/media/logo.a2f7285d.png",
+    "static/media/marc.e8607287.jpg": "/TAMUClimateDashboard/static/media/marc.e8607287.jpg",
+    "static/media/sealevels.a600f501.csv": "/TAMUClimateDashboard/static/media/sealevels.a600f501.csv",
+    "static/media/sidebar-1.0a127c58.jpg": "/TAMUClimateDashboard/static/media/sidebar-1.0a127c58.jpg",
+    "static/media/sidebar-2.22f68ba5.jpg": "/TAMUClimateDashboard/static/media/sidebar-2.22f68ba5.jpg",
+    "static/media/sidebar-3.e667b13e.jpg": "/TAMUClimateDashboard/static/media/sidebar-3.e667b13e.jpg",
+    "static/media/sidebar-4.dd4b5581.jpg": "/TAMUClimateDashboard/static/media/sidebar-4.dd4b5581.jpg",
+    "static/media/sidebar-climatechange.1db4ab12.jpg": "/TAMUClimateDashboard/static/media/sidebar-climatechange.1db4ab12.jpg",
+    "static/media/water.89e4a4f2.jpg": "/TAMUClimateDashboard/static/media/water.89e4a4f2.jpg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.216cbb3d.js",
+    "static/css/2.1881a404.chunk.css",
+    "static/js/2.bba0d714.chunk.js",
+    "static/css/main.3efd2de9.chunk.css",
+    "static/js/main.e364a9d1.chunk.js"
+  ]
+}
