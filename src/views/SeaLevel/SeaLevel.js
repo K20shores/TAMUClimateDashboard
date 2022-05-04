@@ -99,7 +99,7 @@ export default function SeaLevel() {
         max={10}
         onChange={(_, a) => changePicture(a)}
       />
-      <img src={`../images/frames/${location}_${which}.png`} style={{maxWidth:'100%'}}/>
+      <img src={`/TAMUClimateDashboard/images/frames/${location}_${which}.png`} style={{maxWidth:'100%'}}/>
       <br></br><br></br><br></br>
       <div>
         <img src={flooding} alt='Flooding' width='50%' style={{display:'block',marginLeft:'auto',marginRight:'auto'}}/>
