@@ -65,15 +65,15 @@ export default function GreenhouseGases() {
   const [width, setWidth] = useState([]);
 
   const classes = useStyles();
-  // useEffect(() => {
-  //   const resizeObserver = new ResizeObserver((event) => {
-  //     setWidth(event[0].contentBoxSize[0].inlineSize);
-  //   });
+  useEffect(() => {
+    const resizeObserver = new ResizeObserver((event) => {
+      setWidth(event[0].contentBoxSize[0].inlineSize);
+    });
 
-  //   if (cardRef) {
-  //     resizeObserver.observe(cardRef.current);
-  //   }
-  // }, [cardRef]);
+    if (cardRef) {
+      resizeObserver.observe(cardRef.current);
+    }
+  }, [cardRef]);
 
   useEffect(() => {
     d3.csv(dataFile).then((d) => {
